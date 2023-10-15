@@ -52,3 +52,27 @@ class Solution:
                 p1 = p2 
             
             p2 += 1 
+    
+    
+    def maxProfit(self, prices: List[int]) -> int:
+        """
+        - I need biggest different from right pointer minus left pointer
+        - If I got profit, I tend to hold my stock as long as possible -> move right pointer
+        - If the stock at the curr day is lower than my prev sell day, I'd love to buy stock at the curr day -> move left pointer to the curr day if it's lower than left pointer
+
+        Sliding window: 
+            - Constrain metric: difference between 2 values
+            - Numeric restriction of metric(to update left pointer): diff must be > 0
+            - Most valid answer: maximum of profit 
+        """
+        buy = prices[0]
+        profit = 0 
+
+        for sell in prices[1:]:
+            diff = sell - buy
+            profit = max(profit, diff)
+            
+            if diff < 0:
+                buy = sell
+        
+        return profit

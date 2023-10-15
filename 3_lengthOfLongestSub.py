@@ -24,3 +24,29 @@ class Solution:
             subS += char
 
         return max(longestNum, len(subS))
+    
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        """
+        Sliding window
+        - Constrain metric: len() 
+        - Numeric restriction of metric: no repeating chars in the substring
+        - Most valid ans: longest substring without reapting
+
+        Algo: 
+            1. Loop thru s. Check if curr char is in the subStr
+            2. If it is, then remove the leftmost char until there's none of curr char exist in subStr
+            3. add curr char to substr 
+            4. Update longest if curr subStr length is bigger than longest
+        """
+
+        subStr = ""
+        longest = 0
+        for char in s:
+            while char in subStr: 
+                subStr = subStr[1:]
+            
+            subStr += char
+            longest = max(longest, len(subStr))
+
+        return longest
