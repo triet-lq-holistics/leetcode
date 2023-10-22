@@ -40,7 +40,30 @@ def combinationSum(candidates: list[int], target: int) -> list[list[int]]:
     
     helper(candidates, 0, 0, [], target)
 
-if __name__ == '__main__':
-    candidates = [2,3,6,7]
-    target = 7
-    combinationSum(candidates, target)
+def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        """
+            loop thru each item 
+            recursive call the array start from the current idx 
+            base case: 
+                if sum(arr) > target: cook, 
+                if == target, add to ans, then also cook
+        """
+
+
+        ans = []
+
+        def helper(arr, idx):
+            if sum(arr) > target:
+                return 
+            elif sum(arr) == target:
+                nonlocal ans
+                ans.append(arr[:])
+                return
+            
+            for i in range(idx, len(candidates)):
+                arr.append(candidates[i])
+                helper(arr, i)
+                arr.pop()
+        
+        helper([], 0)
+        return ans
