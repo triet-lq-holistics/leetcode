@@ -26,3 +26,24 @@ def findMin(self, nums: list[int]) -> int:
                 high = mid 
         
         return min(nums[low], nums[high])
+
+
+def findMin(self, nums: List[int]) -> int:
+        """
+        if it's rotated. 
+            - first_num < mid_num and last_num < mid_num -> min is on the right ->  low = mid + 1 
+            - first_num > mid_num  and last_num > mid_nunm -> min is on the leftmid -> high = mid
+        If it's not rotated, then the first_num < mid num < last_num
+        """
+        low, high = 0, len(nums) - 1
+
+        while low < high:
+            mid = low + (high-low)//2
+            
+            if nums[low] <= nums[mid] and nums[high] <= nums[mid]:
+                low = mid + 1
+
+            else:
+                high = mid 
+
+        return nums[low]
