@@ -9,16 +9,37 @@ class Solution:
     """
     def findKthLargest(self, nums: List[int], k: int) -> int:
         """
-            Push eac k number into the heapq, then pop the smallest
-            keep doing to the end of the list
-            then return the final heap smallest number in the heap
+            heap: max heap and pop until nums <= k 
         """
-        heap = nums[:k]
-        heapq.heapify(heap)
+        heapq.heapify(nums)
+        while len(nums) > k:
+            heapq.heappop(nums)
         
-        for idx in range (k, len(nums)):
-            heapq.heappush(heap, nums[idx])
-            heapq.heappop(heap)
-        
-        return heapq.heappop(heap)
+        return heapq.heappop(nums)
 
+
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        """
+        quickselect:
+            - pick a pivot (last index)
+            - for loop + pointer, swap pointer to current val if current val < pivot
+            - swap pivot with pointer's value 
+            - quickselect on leftside if current pointer < k, right side if > k, and return val if it's = k 
+        """
+
+        def quickselect(l, r):
+            pointer, pivot = l, nums[r]
+
+            for i in range(l, r):
+                if nums[i] <= pivot:
+                    nums[pointer], nums[i]  = nums[i], nums[pointer]
+                    pointer += 1
+            
+            nums[pointer], nums[r] =  pivot, nums[pointer]
+
+            rank = len(nums) - pointer
+            if rank < k: return quickselect(l, pointer-1)
+            elif rank > k: return quickselect(pointer+1, r)
+            else: return pivot
+        
+        return quickselect(0, len(nums) - 1)
