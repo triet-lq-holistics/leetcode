@@ -24,3 +24,25 @@ def maxSubArray(self, nums: list[int]) -> int:
             return max(nums)
         
         return ans 
+
+
+
+def maxSubArray(self, nums: List[int]) -> int:
+        """
+        1. global max, subarray sum
+        2. loop thru the array
+        3. if current val > subarray sum, then replace subarray sum 
+        4. compare to global max
+        5. return global max
+        """
+
+        global_max = nums[0]
+        local_sum = nums[0]
+        for num in nums[1:]:
+            local_sum = max(local_sum + num, num)
+            global_max = max(global_max, local_sum)
+        
+        return global_max
+
+
+
